@@ -15,15 +15,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (_req: any, file: Express.Multer.File, cb: any) => {
-  if (file.size > 1024 * 1024) {
-    return cb(new Error('File lebih dari 1MB'), false);
-  }
-  cb(null, true);
-};
+// const fileFilter = (_req: any, file: Express.Multer.File, cb: any) => {
+//   if (file.size > 1024 * 1024) {
+//     return cb(new Error('File lebih dari 1MB'), false);
+//   }
+//   cb(null, true);
+// };
 
 export const upload = multer({
   storage,
-  limits: { fileSize: 1024 * 1024 }, // 1MB
-  fileFilter,
+  // limits: { fileSize: 1024 * 1024 }, // 1MB
+  // fileFilter,
 });

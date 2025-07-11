@@ -7,3 +7,9 @@ export interface RegistrasiForm {
   kk: string;
   agreement: boolean;
 }
+
+export interface ImageDetail {
+  authorId: string;
+  fileName: string;
+  filePath: string;
+}

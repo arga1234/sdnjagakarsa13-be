@@ -7,16 +7,29 @@ import { ImageDetail } from '../types';
 
 export const handleFormSubmit = async (req: Request, res: Response) => {
   try {
-    const { nama, jenisKelamin, tempatLahir, tanggalLahir, nik, kk, agreement } = req.body;
-    // 1. Simpan ke DB
-    const registrasi = await prisma.registrasi.create({
+    const {
+      nama,
+      jenisKelamin,
+      asalSekolah,
+      kelasTujuan,
+      tanggalLahir,
+      nik,
+      kk,
+      agreement,
+      whatsapp,
+    } = req.body;
+
+    // 1. Simpan data ke database
+    const registrasi = await prisma.registrasiMutasi.create({
       data: {
         nama,
         jenisKelamin,
-        tempatLahir,
+        asalSekolah,
+        kelasTujuan,
         tanggalLahir,
         nik,
         kk,
+        whatsapp,
         agreement: agreement === 'true',
       },
     });
@@ -24,25 +37,32 @@ export const handleFormSubmit = async (req: Request, res: Response) => {
     const id = registrasi.id;
     const files = req.files as Record<string, Express.Multer.File[]>;
     const listImage: ImageDetail[] = [];
-    // 2. Rename dan pindah file
-    Object.entries(files).forEach(([field, fileArray]) => {
-      const file = fileArray[0]; // ambil satu saja karena maxCount: 1
-      const dirPath = path.join('uploads', field);
-      const newName = `${id}_${file.originalname}`;
-      const newPath = path.join(dirPath, newName);
 
-      if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
-      listImage.push({
-        authorId: id,
-        fileName: newName,
-        filePath: newPath,
+    // 2. Rename dan simpan semua file
+    Object.entries(files).forEach(([field, fileArray]) => {
+      fileArray.forEach((file) => {
+        const dirPath = path.join('uploads', field);
+        const newName = `${id}_${file.originalname}`;
+        const newPath = path.join(dirPath, newName);
+
+        if (!fs.existsSync(dirPath)) {
+          fs.mkdirSync(dirPath, { recursive: true });
+        }
+
+        listImage.push({
+          authorId: id,
+          fileName: newName,
+          filePath: newPath,
+        });
+
+        fs.renameSync(file.path, newPath);
       });
-      fs.renameSync(file.path, newPath);
     });
 
+    // 3. Simpan detail gambar ke DB
     await prisma.imageCollection.createMany({
       data: listImage,
-      skipDuplicates: true, // jika ada duplikat, lewati
+      skipDuplicates: true,
     });
 
     res.status(200).json({

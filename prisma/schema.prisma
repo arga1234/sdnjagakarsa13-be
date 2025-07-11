@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Registrasi {
@@ -17,4 +17,39 @@ model Registrasi {
   kk              String
   agreement       Boolean
   createdAt       DateTime @default(now())
+}
+
+
+model RegistrasiMutasi {
+  id              String   @id @default(cuid())
+  nama            String
+  jenisKelamin    String
+  tanggalLahir    String
+  nik             String
+  kk              String
+  kelasTujuan     String
+  whatsapp        String
+  agreement       Boolean 
+  asalSekolah     String
+  createdAt       DateTime @default(now())
+}
+
+model ImageCollection {
+  id        String @id @default(cuid())
+  authorId  String
+  filePath  String
+  fileName  String
+}
+
+model AbsensiOnline {
+  id             String   @id @default(cuid())
+  namaAnak       String
+  namaOrtu       String
+  noHp           String
+  statusGrup     String
+  tanggalAbsensi DateTime
+  statusHadir    String
+  keterangan     String?  // opsional
+  agreement      Boolean
+  createdAt      DateTime @default(now())
 }
