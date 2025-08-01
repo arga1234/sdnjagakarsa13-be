@@ -5,6 +5,10 @@ const path = require('path');
 module.exports = {
   entry: './src/server.ts',
   target: 'node',
+  externalsPresets: { node: true },
+  externals: {
+    express: 'commonjs express',
+  },
   mode: 'production',
   output: {
     filename: 'bundle.js',
@@ -12,6 +16,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    fallback: {
+      'pg-native': false,
+    },
   },
   module: {
     rules: [

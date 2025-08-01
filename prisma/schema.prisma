@@ -8,37 +8,37 @@ datasource db {
 }
 
 model Registrasi {
-  id              String   @id @default(cuid())
-  nama            String
-  jenisKelamin    String
-  tempatLahir     String
-  tanggalLahir    String
-  nik             String
-  kk              String
-  agreement       Boolean
-  createdAt       DateTime @default(now())
+  id           String   @id @default(cuid())
+  nama         String
+  jenisKelamin String
+  tempatLahir  String
+  tanggalLahir String
+  nik          String
+  kk           String
+  agreement    Boolean
+  createdAt    DateTime @default(now())
 }
 
-
 model RegistrasiMutasi {
-  id              String   @id @default(cuid())
-  nama            String
-  jenisKelamin    String
-  tanggalLahir    String
-  nik             String
-  kk              String
-  kelasTujuan     String
-  whatsapp        String
-  agreement       Boolean 
-  asalSekolah     String
-  createdAt       DateTime @default(now())
+  id           String   @id @default(cuid())
+  nama         String
+  jenisKelamin String
+  tanggalLahir String
+  nik          String
+  kk           String
+  kelasTujuan  String
+  whatsapp     String
+  agreement    Boolean
+  asalSekolah  String
+  createdAt    DateTime @default(now())
+  ujian_id     String?  @db.VarChar(255)
 }
 
 model ImageCollection {
-  id        String @id @default(cuid())
-  authorId  String
-  filePath  String
-  fileName  String
+  id       String @id @default(cuid())
+  authorId String
+  filePath String
+  fileName String
 }
 
 model AbsensiOnline {
@@ -49,7 +49,52 @@ model AbsensiOnline {
   statusGrup     String
   tanggalAbsensi DateTime
   statusHadir    String
-  keterangan     String?  // opsional
+  keterangan     String?
   agreement      Boolean
   createdAt      DateTime @default(now())
+}
+
+model KesanPesan {
+  id        String   @id @default(cuid())
+  idAcara   String
+  nama      String
+  kesan     String
+  pesan     String
+  rating    String
+  agreement Boolean
+  createdAt DateTime @default(now())
+  likedBy   Int      @default(0)
+}
+
+model feedback_acara {
+  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nama_acara String
+}
+
+model jenis_soal {
+  id   String @id @db.Uuid
+  nama String @db.VarChar(255)
+}
+
+model parent_soal {
+  id       String  @id @db.Uuid
+  ujian_id String? @db.VarChar
+  type     String? @db.VarChar
+  content  String? @db.VarChar
+}
+
+model soal {
+  id            String  @id @db.Uuid
+  jenis_soal_id String  @db.VarChar(50)
+  ujian_id      String  @db.VarChar(50)
+  parent_id     String? @db.VarChar(50)
+  pertanyaan    String
+  gambar        String?
+  jawaban       String
+  jawaban_benar String
+}
+
+model ujian {
+  id   String @id @db.Uuid
+  nama String @db.VarChar(255)
 }

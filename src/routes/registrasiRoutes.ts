@@ -11,6 +11,6 @@ const uploadFields = upload.fields([
   { name: 'pasFoto', maxCount: 1 },
 ]);
 
-router.post('/', uploadFields, handleFormSubmit);
+router.post('/login', uploadFields, handleFormSubmit);
 
 export { router as registrasiRoutes };
