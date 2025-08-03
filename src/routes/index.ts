@@ -5,3 +5,4 @@ export * from './kesanPesan';
 export * from './mutasi';
 export * from './soal';
 export * from './checkinRoute';
+export * from './dapodik.routes';

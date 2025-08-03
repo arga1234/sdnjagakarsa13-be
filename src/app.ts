@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import {
   checkinRoute,
+  dapodikRoute,
   kesanPesanRoutes,
   MutasiRouter,
   presensiRoutes,
@@ -25,4 +26,5 @@ app.use('/api/mutasi', MutasiRouter);
 app.use('/api/soal', soalUjianRoutes);
 app.use('/api/live-score', liveScoreRoutes);
 app.use('/api/checkin', checkinRoute);
+app.use('/api/dapodik', dapodikRoute);
 export default app;
