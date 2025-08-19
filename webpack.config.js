@@ -8,6 +8,7 @@ module.exports = {
   externalsPresets: { node: true },
   externals: {
     express: 'commonjs express',
+    puppeteer: 'commonjs puppeteer',
   },
   mode: 'production',
   output: {

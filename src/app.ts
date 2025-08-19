@@ -11,6 +11,7 @@ import {
   soalUjianRoutes,
 } from './routes';
 import { liveScoreRoutes } from './routes/liveScoreRoutes';
+import { browserRouter } from './routes/browserRoutes';
 
 const app = express();
 
@@ -27,4 +28,5 @@ app.use('/api/soal', soalUjianRoutes);
 app.use('/api/live-score', liveScoreRoutes);
 app.use('/api/checkin', checkinRoute);
 app.use('/api/dapodik', dapodikRoute);
+app.use('/api/automation', browserRouter);
 export default app;

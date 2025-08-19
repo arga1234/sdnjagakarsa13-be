@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { createBiodataDapodik } from '../controllers/biodataDapodik.controller';
+import {
+  createBiodataDapodik,
+  getBiodataDapodikByNik,
+  updateBiodataDapodikByNik,
+} from '../controllers/biodataDapodik.controller';
 import { upload } from '../middlewares';
 
 const router = Router();
@@ -10,5 +14,7 @@ const uploadFields = upload.fields([
 ]);
 
 router.post('/create-peserta-didik', uploadFields, createBiodataDapodik);
+router.post('/update-peserta-didik/:murid_nik', uploadFields, updateBiodataDapodikByNik);
+router.get('/get-biodata-dapodik/:murid_nik', getBiodataDapodikByNik);
 
 export { router as dapodikRoute };
